@@ -1,6 +1,9 @@
 DOCKER_IMAGES = $(shell docker images -q credit-policy-src)
 
 up:
+	docker-compose up -d --build --remove-orphans
+
+up-local:
 	docker-compose up --build --remove-orphans
 
 down:
@@ -9,4 +12,4 @@ ifneq ($(strip $(DOCKER_IMAGES)),)
 	docker rmi $(DOCKER_IMAGES)
 endif
 
-.PHONY: up down
+.PHONY: up up-local down
