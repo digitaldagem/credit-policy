@@ -1,0 +1,46 @@
+name: CI Pipeline Job
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  id:
+    name: CI Pipeline Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"  # Specify the Python version you need
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv .venv
+          . .venv/bin/activate
+          pip install django djangorestframework pytest pytest-django
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Build and Start Services
+        run: make up
+
+      - name: Run Tests with pytest
+        run: |
+          . .venv/bin/activate
+          pytest
+
+      - name: Stop Services and Remove Images
+        run: make down
