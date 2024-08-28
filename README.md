@@ -35,23 +35,26 @@ credit-policy
     └───pytest.ini
 ```
 
-## How to run locally:
+## How to run service locally:
 * `$ make up`
 
 ## How to stop running service:
 * `$ make down`
 
-## How to run tests:
-Step one create a virtual environment in root directory:
+## How to run tests locally:
+Step one... create a virtual environment in root directory:
 * `$ python3 -m venv .venv`  
 
-Step two activate the virtual environment:
+Step two... activate the virtual environment:
 * `$ . .venv/bin/activate`  
 
-Step three install django, djangorestframework, pytest and pytest-django in the virtual environment:
-* `$ pip install django djangorestframework pytest pytest-django`  
+Step three... install required dependencies in the virtual environment:
+* `$ pip install -r requirements.txt`  
 
-Step four run pytest
+Step four... make sure database migrations are run:
+* `$ python manage.py makemigrations`
+
+Step five... run pytest
 * `$ pytest`
 
 
